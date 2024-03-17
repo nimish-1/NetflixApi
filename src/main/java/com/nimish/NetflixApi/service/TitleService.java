@@ -1,12 +1,11 @@
 package com.nimish.NetflixApi.service;
 
 import com.nimish.NetflixApi.dto.TitleDto;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface TitleService {
-    Flux<TitleDto> getAllTitles();
+    Flux<TitleDto> getAllTitles(String genre, String country);
 
     Mono<TitleDto> getTitle(Integer id);
 

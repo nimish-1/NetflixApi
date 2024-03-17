@@ -16,8 +16,18 @@ public class TitleServiceImpl implements TitleService {
     private TitleRepository titleRepository;
 
     @Override
-    public Flux<TitleDto> getAllTitles() {
-        return this.titleRepository.findAll().map(titleEntity -> new TitleDto(
+    public Flux<TitleDto> getAllTitles(String genre, String country) {
+        Flux<TitleEntity> titleEntityFlux = null;
+        if (genre == null && country == null)
+            titleEntityFlux = this.titleRepository.findAll();
+        else if (genre == null)
+            titleEntityFlux = this.titleRepository.filterByCountry(country);
+        else if (country == null)
+            titleEntityFlux = this.titleRepository.filterByGenre(genre);
+        else
+            titleEntityFlux = this.titleRepository.filterByCountryAndGenre(country, genre);
+
+        return titleEntityFlux.map(titleEntity -> new TitleDto(
                 titleEntity.getId(),
                 titleEntity.getShowId(),
                 titleEntity.getType(),
@@ -31,6 +41,7 @@ public class TitleServiceImpl implements TitleService {
                 titleEntity.getListedIn(),
                 titleEntity.getDescription()));
     }
+
 
     @Override
     public Mono<TitleDto> getTitle(Integer id) {

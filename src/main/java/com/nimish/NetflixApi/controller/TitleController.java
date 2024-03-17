@@ -15,8 +15,11 @@ public class TitleController {
     private TitleService titleService;
 
     @GetMapping
-    public Flux<TitleDto> getAllTitles() {
-        return this.titleService.getAllTitles();
+    public Flux<TitleDto> getAllTitles(
+            @RequestParam(value = "genre", required = false) String genre,
+            @RequestParam(value = "country", required = false) String country
+    ) {
+        return this.titleService.getAllTitles(genre, country);
     }
 
     @GetMapping("/{titleId}")
