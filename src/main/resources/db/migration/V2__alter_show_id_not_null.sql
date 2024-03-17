@@ -1,0 +1,1 @@
+ALTER TABLE netflix_title ALTER COLUMN show_id SET NOT NULL;
